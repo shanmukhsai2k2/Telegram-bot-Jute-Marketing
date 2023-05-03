@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO)
 
 load_dotenv()
 BOT_TOKEN = os.getenv('BOT_TOKEN') 
-bot=Bot(token='6158614402:AAHua_bOhbDGgxE38-HkBA067Adybic3OjU')
+bot=Bot(token=BOT_TOKEN)
 PAYMENT_TOKEN=os.getenv('PAYMENT_TOKEN')
 dp=Dispatcher(bot)
 
@@ -96,7 +96,7 @@ async def options(call:types.CallbackQuery):
             call.message.chat.id,
             title="Jute Bag",
             description="Payment of 100 USD",
-            provider_token='5322214758:TEST:c1763f48-e65e-4610-8ac8-d5cf961dcbe1',
+            provider_token=PAYMENT_TOKEN,
             currency="usd",
             is_flexible=False,
             prices=[Price],

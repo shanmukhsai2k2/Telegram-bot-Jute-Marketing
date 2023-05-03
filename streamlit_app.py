@@ -96,7 +96,7 @@ async def options(call:types.CallbackQuery):
             call.message.chat.id,
             title="Jute Bag",
             description="Payment of 100 USD",
-            provider_token=5322214758:TEST:c1763f48-e65e-4610-8ac8-d5cf961dcbe1,
+            provider_token='5322214758:TEST:c1763f48-e65e-4610-8ac8-d5cf961dcbe1',
             currency="usd",
             is_flexible=False,
             prices=[Price],

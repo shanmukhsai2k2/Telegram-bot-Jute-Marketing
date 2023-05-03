@@ -39,7 +39,7 @@ keyboard_inline2=InlineKeyboardMarkup().add(button2,button3,button4,button5,butt
 @dp.message_handler(commands=['start','help'])
 async def welcome(message:types.Message):
     await message.reply("Hello, Welcome to Vishvm Jute World. \nExplore the world of Jute products and Become a part of eco friendly community!!  ")
-    await bot.send_photo(chat_id=message.chat.id,photo=open('Images/logo.png','rb'))
+    await message.answer_photo(types.InputFile('Images/logo.png'))
 
     await message.answer(emojize(text(':smiling_face_with_smiling_eyes:')),reply_markup=keyboard_inline)
 

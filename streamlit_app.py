@@ -95,9 +95,9 @@ async def options(call:types.CallbackQuery):
         await bot.send_invoice(
             call.message.chat.id,
             title="Jute Bag",
-            description="Payment of 100 USD",
+            description="Payment of 100 Rs",
             provider_token=PAYMENT_TOKEN,
-            currency="usd",
+            currency="inr",
             is_flexible=False,
             prices=[Price],
             start_parameter='one-month-subscription',

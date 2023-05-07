@@ -1,7 +1,8 @@
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.utils.emoji import emojize
 from aiogram.utils.markdown import bold, code, italic, text
-import os
+import os 
+from keep_alive import keep_alive
 from aiogram.types import ReplyKeyboardMarkup , ReplyKeyboardRemove, KeyboardButton
 from aiogram.types import InlineKeyboardMarkup,InlineKeyboardButton
 from dotenv import load_dotenv
@@ -11,11 +12,11 @@ from aiogram.types.message import ContentType
 
 #log
 logging.basicConfig(level=logging.INFO)
-
+keep_alive()
 load_dotenv()
 BOT_TOKEN = os.getenv('BOT_TOKEN') 
-bot=Bot(token=BOT_TOKEN)
-PAYMENT_TOKEN=os.getenv('PAYMENT_TOKEN')
+bot = Bot(token=BOT_TOKEN)
+PAYMENT_TOKEN=os.getenv('PAYMENT_TOKEN') 
 dp=Dispatcher(bot)
 
 button1= InlineKeyboardButton(text="Begin",callback_data="Shopping")
@@ -41,7 +42,7 @@ async def welcome(message:types.Message):
     await message.reply("Hello, Welcome to Vishvm Jute World. \nExplore the world of Jute products and Become a part of eco friendly community!!  ")
     await message.answer_photo(types.InputFile('Images/logo.png'))
 
-    await message.answer(emojize(text(':smiling_face_with_smiling_eyes:')),reply_markup=keyboard_inline)
+    await message.answer(text="😄",reply_markup=keyboard_inline)
 
 @dp.callback_query_handler(text=['Shopping','Travel Bags',"Hand_Bags","Sling_Bags","Pencil_pouches","Samosa_bags","Mobile_pouch","File_holder","Lunch_bags","Gift","Vegetable",'Back','Pay' ])
 async def options(call:types.CallbackQuery):
@@ -95,7 +96,7 @@ async def options(call:types.CallbackQuery):
         await bot.send_invoice(
             call.message.chat.id,
             title="Jute Bag",
-            description="Payment of 100 Rs",
+            description="Payment of 100 USD",
             provider_token=PAYMENT_TOKEN,
             currency="inr",
             is_flexible=False,
@@ -105,7 +106,7 @@ async def options(call:types.CallbackQuery):
         )
         @dp.pre_checkout_query_handler(lambda query : True)
         async def pre_checkout_query(pre_checkout_q : types.PreCheckoutQuery):
-            await bot.answer_pre_checkout_query(pre_checkout_q.id, ok=True)
+          await bot.answer_pre_checkout_query(pre_checkout_q.id, ok=True)
         @dp.message_handler(content_types=ContentType.SUCCESSFUL_PAYMENT)
         async def successful_payment(message: types.Message):
             print("SUCCESSFUL PAYMENT:")
@@ -114,6 +115,6 @@ async def options(call:types.CallbackQuery):
                 print(f"{key} = {value}")
             
             await bot.send_message(message.chat.id,f'Payment for amount {message.successful_payment.total_amount //100} {message.successful_payment.currency} Passed Successfully!!!!')
-            await message.answer(emojize(text(':thumbs_up:')))
+            await message.answer(text="👍")
 
 executor.start_polling(dp,skip_updates=False)
